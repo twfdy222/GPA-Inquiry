@@ -16,7 +16,7 @@
 ## 本地运行
 
 ```powershell
-cd "C:\Users\twfd\Desktop\codex_workplace\GPA Inquiry"
+cd "C:\Users\twfd\Desktop\GPA Inquiry"
 npm.cmd install
 npm.cmd run dev
 ```
@@ -25,6 +25,12 @@ npm.cmd run dev
 
 ```txt
 http://127.0.0.1:5173/
+```
+
+也可以直接双击：
+
+```txt
+start-gpa-inquiry.bat
 ```
 
 ## 验证
