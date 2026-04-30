@@ -1,4 +1,5 @@
-export type AppVersion = '1.0'
+export type AppVersion = '1.0' | '1.1'
+export type CourseKind = 'required' | 'major' | 'elective'
 
 export type GradeItem = {
   id: string
@@ -11,6 +12,7 @@ export type GradeItem = {
 export type Course = {
   id: string
   name: string
+  kind?: CourseKind
   credits: number
   targetScore?: number
   items: GradeItem[]
@@ -65,6 +67,7 @@ export type SummaryStats = {
   totalGpa?: number
   weightedAverage?: number
   totalCredits: number
+  plannedCredits: number
   courseCount: number
   completeCourseCount: number
 }

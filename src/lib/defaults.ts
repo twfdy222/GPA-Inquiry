@@ -1,7 +1,8 @@
 import type { AppData, Course, GpaRule, GradeItem } from '../types/grade'
 
-export const APP_VERSION = '1.0' as const
-export const STORAGE_KEY = 'gpa-inquiry.v1.0'
+export const APP_VERSION = '1.1' as const
+export const STORAGE_KEY = 'gpa-inquiry.v1.1'
+export const LEGACY_STORAGE_KEYS = ['gpa-inquiry.v1.0'] as const
 
 export const defaultGpaRules: GpaRule[] = [
   { id: 'rule-95-100', min: 95, max: 100, point: 4.33 },
@@ -50,6 +51,7 @@ export function createCourse(): Course {
   return {
     id: createId('course'),
     name: '新课程',
+    kind: 'required',
     credits: 3,
     targetScore: undefined,
     items: [

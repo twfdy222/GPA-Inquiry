@@ -4,3 +4,7 @@ dist
 *.local
 *.tsbuildinfo
 node_modules/.tmp
+tmp/
+output/playwright/
+.playwright-cli/
+GPA_Inquiry_v1.0_conversation_summary.docx

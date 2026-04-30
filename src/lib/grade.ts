@@ -192,6 +192,7 @@ export function calculateSummary(
   rules: GpaRule[],
 ): SummaryStats {
   const calculations = courses.map((course) => calculateCourse(course, rules))
+  const plannedCredits = courses.reduce((sum, course) => sum + course.credits, 0)
   const completeRows = courses
     .map((course, index) => ({ course, calculation: calculations[index] }))
     .filter(({ course, calculation }) => course.credits > 0 && calculation.isComplete)
@@ -209,6 +210,7 @@ export function calculateSummary(
     weightedAverage:
       totalCredits > 0 ? weightedScoreSum / totalCredits : undefined,
     totalCredits,
+    plannedCredits,
     courseCount: courses.length,
     completeCourseCount: completeRows.length,
   }
