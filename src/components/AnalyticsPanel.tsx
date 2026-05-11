@@ -36,38 +36,35 @@ export function AnalyticsPanel({
 
   return (
     <section className="grid gap-4 lg:grid-cols-3">
-      <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft lg:col-span-2">
+      <article className="dashboard-panel dashboard-panel--analytics p-5 lg:col-span-2">
         <div className="flex items-center gap-2">
           <BarChart3 className="size-5 text-brand-600" aria-hidden="true" />
           <h2 className="text-base font-semibold text-slate-950">学期趋势</h2>
         </div>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-2 text-sm leading-6 text-slate-500">
           {latestSummary
-            ? `最近学期 ${latestSummary.semesterName} 的 GPA 为 ${formatGpa(
+            ? `最近学期“${latestSummary.semesterName}”的 GPA 为 ${formatGpa(
                 latestSummary.totalGpa,
-              )}，均分 ${formatScore(latestSummary.weightedAverage)}。`
-            : '创建学期并录入完整课程后，这里会显示趋势。'}
+              )}，加权均分为 ${formatScore(latestSummary.weightedAverage)}。`
+            : '创建学期并录入完整课程后，这里会显示每个学期的累计趋势。'}
         </p>
-        <div className="mt-4 grid gap-3">
+        <div className="mt-5 grid gap-4">
           {semesterSummaries.length === 0 ? (
-            <div className="rounded-md bg-slate-50 px-3 py-8 text-center text-sm text-slate-500">
+            <div className="rounded-[22px] bg-white/56 px-4 py-8 text-center text-sm text-slate-500">
               暂无趋势数据
             </div>
           ) : (
             semesterSummaries.map((summary) => (
-              <div key={summary.semesterId} className="grid gap-1.5">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold text-slate-700">
-                    {summary.semesterName}
-                  </span>
+              <div key={summary.semesterId} className="grid gap-2">
+                <div className="flex items-center justify-between gap-3 text-sm">
+                  <span className="font-semibold text-slate-700">{summary.semesterName}</span>
                   <span className="text-slate-500">
-                    GPA {formatGpa(summary.totalGpa)} · 均分{' '}
-                    {formatScore(summary.weightedAverage)}
+                    GPA {formatGpa(summary.totalGpa)} · 均分 {formatScore(summary.weightedAverage)}
                   </span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                <div className="h-2.5 overflow-hidden rounded-full bg-white/62">
                   <div
-                    className="h-full rounded-full bg-brand-600"
+                    className="h-full rounded-full bg-gradient-to-r from-brand-500 to-sky-300"
                     style={{
                       width:
                         summary.totalGpa === undefined
@@ -81,32 +78,30 @@ export function AnalyticsPanel({
           )}
         </div>
         {gpaDelta !== undefined && (
-          <p className="mt-3 text-sm text-slate-500">
-            较上一学期 {gpaDelta >= 0 ? '上升' : '下降'} {Math.abs(gpaDelta).toFixed(2)}。
+          <p className="mt-4 text-sm text-slate-500">
+            相比上一学期，GPA {gpaDelta >= 0 ? '上升' : '下降'} {Math.abs(gpaDelta).toFixed(2)}。
           </p>
         )}
       </article>
 
-      <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+      <article className="dashboard-panel dashboard-panel--analytics p-5">
         <div className="flex items-center gap-2">
           <PieChart className="size-5 text-emerald-600" aria-hidden="true" />
           <h2 className="text-base font-semibold text-slate-950">学分构成</h2>
         </div>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-2 text-sm leading-6 text-slate-500">
           当前视图合计 {formatNumber(creditDistribution.total, 1)} 学分。
         </p>
-        <div className="mt-4 grid gap-3">
+        <div className="mt-5 grid gap-4">
           {(['required', 'major', 'elective'] as const).map((kind) => (
-            <div key={kind} className="grid gap-1.5">
-              <div className="flex justify-between text-sm">
-                <span className="font-semibold text-slate-700">
-                  {courseKindLabels[kind]}
-                </span>
+            <div key={kind} className="grid gap-2">
+              <div className="flex justify-between gap-3 text-sm">
+                <span className="font-semibold text-slate-700">{courseKindLabels[kind]}</span>
                 <span className="text-slate-500">
                   {formatNumber(creditDistribution[kind], 1)} 学分
                 </span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-2.5 overflow-hidden rounded-full bg-white/62">
                 <div
                   className={
                     kind === 'required'
@@ -128,21 +123,21 @@ export function AnalyticsPanel({
         </div>
       </article>
 
-      <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft lg:col-span-3">
+      <article className="dashboard-panel dashboard-panel--analytics p-5 lg:col-span-3">
         <div className="flex items-center gap-2">
           <AlertTriangle className="size-5 text-amber-600" aria-hidden="true" />
           <h2 className="text-base font-semibold text-slate-950">风险课程</h2>
         </div>
-        <div className="mt-3 grid gap-2">
+        <div className="mt-4 grid gap-3">
           {riskCourses.length === 0 ? (
-            <div className="rounded-md bg-emerald-50 px-3 py-3 text-sm text-emerald-700">
-              当前视图没有发现风险课程。
+            <div className="rounded-[22px] bg-emerald-50/88 px-4 py-4 text-sm text-emerald-700">
+              当前视图没有发现需要特别关注的风险课程。
             </div>
           ) : (
             riskCourses.slice(0, 5).map(({ course, reasons }) => (
               <div
                 key={course.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-amber-100 bg-amber-50 px-3 py-2 text-sm"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-[22px] border border-amber-100 bg-amber-50/88 px-4 py-3 text-sm"
               >
                 <span className="font-semibold text-slate-800">{course.name}</span>
                 <span className="text-amber-700">{reasons.join('；')}</span>

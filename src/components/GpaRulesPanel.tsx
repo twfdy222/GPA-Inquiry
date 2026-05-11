@@ -25,23 +25,21 @@ export function GpaRulesPanel({
   const validation = validateGpaRules(rules)
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white shadow-soft">
+    <section className="dashboard-panel dashboard-panel--rules overflow-hidden">
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full flex-wrap items-center justify-between gap-4 px-5 py-4 text-left"
+        className="flex w-full flex-wrap items-center justify-between gap-4 px-5 py-5 text-left"
       >
-        <span className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center rounded-md bg-brand-50 text-brand-700">
+        <span className="flex items-center gap-4">
+          <span className="flex size-11 items-center justify-center rounded-[18px] bg-white/72 font-semibold text-brand-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
             GPA
           </span>
           <span>
-            <span className="block text-base font-semibold text-slate-950">
-              GPA 计算规则
-            </span>
+            <span className="panel-kicker">规则与阈值</span>
+            <span className="mt-1 block text-lg font-semibold text-slate-950">GPA 计算规则</span>
             <span className="mt-1 block text-sm text-slate-500">
-              当前采用：<span className="font-semibold text-brand-700">4.33 制</span>
-              {' / '}可自定义绩点规则
+              当前采用 <span className="font-semibold text-brand-700">4.33 制</span>，支持自定义成绩区间与绩点。
             </span>
           </span>
         </span>
@@ -52,11 +50,12 @@ export function GpaRulesPanel({
       </button>
 
       {isOpen && (
-        <div className="grid gap-4 border-t border-slate-100 px-5 py-5">
+        <div className="grid gap-4 border-t border-[var(--section-rules-border)] px-5 py-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="max-w-3xl text-sm text-slate-500">
-              规则按四舍五入后的最终成绩匹配，判断方式为 min &lt;= 分数 &lt; max，最高档可包含 100 分。
-              绩点始终保留两位小数显示，例如 {formatGpa(4)}。
+            <p className="max-w-3xl text-sm leading-7 text-slate-500">
+              规则会先对课程总评执行四舍五入，再按区间匹配绩点。判断方式为
+              <span className="font-semibold text-slate-700"> min ≤ 分数 &lt; max </span>，
+              最后一档可包含 100 分。绩点始终保留两位小数显示，例如 {formatGpa(4)}。
             </p>
             <div className="flex flex-wrap gap-2">
               <Button
@@ -76,7 +75,7 @@ export function GpaRulesPanel({
                 variant="danger"
                 icon={RotateCcw}
                 onClick={() => {
-                  if (window.confirm('确定恢复默认 GPA 规则吗？当前自定义规则会被覆盖。')) {
+                  if (window.confirm('确定恢复默认 GPA 规则吗？当前自定义内容会被覆盖。')) {
                     onChange(defaultGpaRules.map((rule) => ({ ...rule })))
                   }
                 }}
@@ -102,7 +101,7 @@ export function GpaRulesPanel({
             {rules.map((rule) => (
               <div
                 key={rule.id}
-                className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 sm:grid-cols-[1fr_1fr_1fr_auto]"
+                className="grid gap-3 rounded-[24px] border border-[rgba(214,201,247,0.84)] bg-white/54 p-4 sm:grid-cols-[1fr_1fr_1fr_auto]"
               >
                 <NumberInput
                   label="下限"

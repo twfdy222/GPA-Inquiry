@@ -24,6 +24,7 @@ import {
 } from './defaults'
 
 const SUPPORTED_LEGACY_VERSIONS: AppVersion[] = ['1.0', '1.1']
+const SUPPORTED_CURRENT_VERSIONS: AppVersion[] = ['2.0', '2.1']
 
 type StoredRecord = {
   id: string
@@ -141,7 +142,7 @@ function isAppData(value: unknown): value is AppData {
   const data = value as Partial<AppData>
 
   return (
-    data.version === APP_VERSION &&
+    SUPPORTED_CURRENT_VERSIONS.includes(data.version as AppVersion) &&
     data.schemaVersion === SCHEMA_VERSION &&
     Array.isArray(data.semesters) &&
     data.semesters.every(isSemester) &&
@@ -362,7 +363,7 @@ export function exportAppData(data: AppData): void {
   const anchor = document.createElement('a')
 
   anchor.href = url
-  anchor.download = `gpa-inquiry-v2-backup-${new Date()
+  anchor.download = `gpa-inquiry-v2.1-backup-${new Date()
     .toISOString()
     .slice(0, 10)}.json`
   anchor.click()
@@ -381,7 +382,7 @@ export function parseImportedAppData(rawData: string): AppData {
     return migrateLegacyData(parsedData, 'import')
   }
 
-  throw new Error('导入文件不是有效的 v1.0 / v1.1 / v2.0 数据。')
+  throw new Error('导入文件不是有效的 v1.0 / v1.1 / v2.0 / v2.1 数据。')
 }
 
 export { defaultGpaRules }

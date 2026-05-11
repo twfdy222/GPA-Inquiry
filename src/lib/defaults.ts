@@ -1,6 +1,6 @@
 import type { AppData, Course, GpaRule, GradeItem, Semester } from '../types/grade'
 
-export const APP_VERSION = '2.0' as const
+export const APP_VERSION = '2.1' as const
 export const SCHEMA_VERSION = '2.0' as const
 export const STORAGE_KEY = 'gpa-inquiry.v1.1'
 export const LEGACY_STORAGE_KEYS = ['gpa-inquiry.v1.0'] as const

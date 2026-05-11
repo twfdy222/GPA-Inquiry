@@ -44,13 +44,14 @@ export function CourseEditor({
 }: CourseEditorProps) {
   if (!course) {
     return (
-      <section className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-soft">
-        <div className="mx-auto max-w-sm">
-          <h2 className="text-lg font-semibold text-slate-950">还没有课程</h2>
-          <p className="mt-2 text-sm text-slate-500">
-            添加一门课程后，就可以填写成绩组成、模拟目标总评，并计算 GPA。
+      <section className="dashboard-panel dashboard-panel--editor p-8 text-center">
+        <div className="mx-auto max-w-md">
+          <div className="panel-kicker">课程详情</div>
+          <h2 className="mt-2 text-2xl font-semibold text-slate-950">还没有课程</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-500">
+            添加一门课程后，就可以录入成绩构成、填写目标总评，并在右侧查看 GPA 与反推结果。
           </p>
-          <Button className="mt-5" variant="primary" icon={Plus} onClick={onAddCourse}>
+          <Button className="mt-6" variant="primary" icon={Plus} onClick={onAddCourse}>
             添加课程
           </Button>
         </div>
@@ -64,9 +65,7 @@ export function CourseEditor({
   const updateItem = (nextItem: GradeItem) => {
     onChange({
       ...course,
-      items: course.items.map((item) =>
-        item.id === nextItem.id ? nextItem : item,
-      ),
+      items: course.items.map((item) => (item.id === nextItem.id ? nextItem : item)),
     })
   }
 
@@ -78,30 +77,32 @@ export function CourseEditor({
   }
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white shadow-soft">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-semibold text-slate-950">
-            课程详情 / {course.name || '未命名课程'}
+    <section className="dashboard-panel dashboard-panel--editor overflow-hidden">
+      <div className="panel-header border-b border-[var(--section-editor-border)]">
+        <div>
+          <div className="panel-kicker">当前编辑</div>
+          <h2 className="mt-1 text-xl font-semibold text-slate-950">
+            {course.name || '未命名课程'}
           </h2>
-          <span className="rounded-md bg-brand-50 px-2 py-1 text-sm font-semibold text-brand-700">
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/72 px-3 py-1 text-sm font-semibold text-brand-700">
+            <span className="inline-block size-2 rounded-full bg-brand-500" />
             {courseKindLabels[kind]}
-          </span>
+          </div>
         </div>
         <Button variant="soft" size="sm" icon={Plus} onClick={onAddCourse}>
-          添加课程
+          新建课程
         </Button>
       </div>
 
       <div className="grid gap-5 p-5">
-        <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-[minmax(180px,1fr)_auto_auto_minmax(160px,220px)]">
+        <div className="grid gap-4 xl:grid-cols-[minmax(220px,1.3fr)_minmax(220px,1fr)_120px_180px]">
           <TextInput
             label="课程名称"
             value={course.name}
             onChange={(name) => onChange({ ...course, name })}
           />
-          <div className="grid gap-1.5">
-            <span className="text-sm font-medium text-slate-700">课程类型</span>
+          <div className="grid gap-2">
+            <span className="text-sm font-semibold text-slate-700">课程类型</span>
             <SegmentedControl<CourseKind>
               value={kind}
               options={courseKindOptions.map((option) => ({
@@ -146,12 +147,12 @@ export function CourseEditor({
           </Notice>
         ))}
 
-        <div className="overflow-hidden rounded-lg border border-slate-200">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3">
+        <div className="overflow-hidden rounded-[24px] border border-[rgba(189,230,212,0.8)] bg-white/52">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(189,230,212,0.72)] bg-white/42 px-4 py-4">
             <div>
               <h3 className="text-sm font-semibold text-slate-950">成绩构成</h3>
-              <p className="mt-1 text-xs text-slate-500">
-                权重合计为 100% 时，课程才会进入总 GPA 统计。
+              <p className="mt-1 text-xs leading-6 text-slate-500">
+                权重合计到 100% 后，课程才会进入总 GPA 统计；若只留一个待反推项目，可结合目标总评反算所需分数。
               </p>
             </div>
             <Button
@@ -170,7 +171,7 @@ export function CourseEditor({
           </div>
 
           <div>
-            <div className="hidden grid-cols-[minmax(120px,1fr)_130px_130px_90px_72px_36px] gap-2 border-b border-slate-100 bg-white px-4 py-3 text-sm font-semibold text-slate-600 md:grid">
+            <div className="hidden grid-cols-[minmax(140px,1fr)_150px_150px_96px_92px_40px] gap-3 border-b border-slate-100 bg-white/66 px-4 py-3 text-sm font-semibold text-slate-600 md:grid">
               <span>项目</span>
               <span>权重 (%)</span>
               <span>已得分</span>
@@ -182,10 +183,10 @@ export function CourseEditor({
             {course.items.map((item) => (
               <div
                 key={item.id}
-                className="grid gap-3 border-b border-slate-100 px-4 py-4 last:border-b-0 md:grid-cols-[minmax(120px,1fr)_130px_130px_90px_72px_36px] md:items-center md:gap-2 md:py-3"
+                className="grid gap-3 border-b border-slate-100/90 px-4 py-4 last:border-b-0 md:grid-cols-[minmax(140px,1fr)_150px_150px_96px_92px_40px] md:items-center md:gap-3"
               >
-                <div className="grid gap-1.5">
-                  <span className="text-xs font-semibold text-slate-500 md:hidden">
+                <div className="grid gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 md:hidden">
                     项目
                   </span>
                   <TextInput
@@ -194,9 +195,9 @@ export function CourseEditor({
                     onChange={(name) => updateItem({ ...item, name })}
                   />
                 </div>
-                <div className="grid gap-1.5">
-                  <span className="text-xs font-semibold text-slate-500 md:hidden">
-                    权重 (%)
+                <div className="grid gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 md:hidden">
+                    权重
                   </span>
                   <StepperNumberInput
                     min={0}
@@ -212,8 +213,8 @@ export function CourseEditor({
                     }
                   />
                 </div>
-                <div className="grid gap-1.5">
-                  <span className="text-xs font-semibold text-slate-500 md:hidden">
+                <div className="grid gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 md:hidden">
                     已得分
                   </span>
                   <StepperNumberInput
@@ -230,11 +231,11 @@ export function CourseEditor({
                     }
                   />
                 </div>
-                <div className="grid gap-1.5">
-                  <span className="text-xs font-semibold text-slate-500 md:hidden">
+                <div className="grid gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 md:hidden">
                     贡献分
                   </span>
-                  <span className="font-semibold text-brand-600">
+                  <span className="rounded-2xl bg-[rgba(231,244,255,0.86)] px-3 py-3 text-center font-semibold text-brand-700">
                     {formatScore(calculateContribution(item))}
                   </span>
                 </div>
@@ -264,9 +265,9 @@ export function CourseEditor({
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(189,230,212,0.72)] bg-white/42 px-4 py-4 text-sm">
             <span className="font-semibold text-slate-700">
-              权重合计：{' '}
+              权重合计：
               <span
                 className={
                   calculation.weightStatus === 'complete'
@@ -276,11 +277,12 @@ export function CourseEditor({
                       : 'text-amber-600'
                 }
               >
+                {' '}
                 {formatNumber(calculation.weightTotal, 1)}%
               </span>
             </span>
-            <span className="font-semibold text-brand-600">
-              已得贡献分合计：{formatScore(calculation.knownContribution)} / 100
+            <span className="font-semibold text-brand-700">
+              已得贡献分：{formatScore(calculation.knownContribution)} / 100
             </span>
           </div>
         </div>

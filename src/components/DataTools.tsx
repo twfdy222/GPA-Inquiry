@@ -37,17 +37,17 @@ export function DataTools({
   }
 
   return (
-    <div className="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
+    <div className="dashboard-panel grid gap-3 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-semibold text-slate-900">数据工具</h2>
           <p className="mt-1 text-sm text-slate-500">
-            当前数据只保存在这个浏览器里，可导出 JSON 备份。
+            当前数据保存在本地浏览器，可导出 JSON 备份。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button onClick={() => exportAppData(data)}>导出 JSON</Button>
-          <label className="inline-flex min-h-10 cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-brand-200 hover:bg-brand-50">
+          <label className="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-brand-200 hover:bg-brand-50">
             导入 JSON
             <input
               type="file"
@@ -59,7 +59,7 @@ export function DataTools({
           <Button
             variant="danger"
             onClick={() => {
-              if (window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复为空或默认。')) {
+              if (window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复到默认状态。')) {
                 onClear()
               }
             }}

@@ -22,14 +22,14 @@ export function CourseCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`grid w-full grid-cols-[1fr_auto] items-center gap-3 rounded-lg border px-4 py-3 text-left transition ${
+      className={`group grid w-full grid-cols-[1fr_auto] items-center gap-4 rounded-[24px] border px-4 py-4 text-left transition duration-200 ${
         selected
-          ? 'border-brand-500 bg-brand-50 shadow-sm ring-2 ring-brand-100'
-          : 'border-slate-200 bg-white hover:border-brand-200 hover:bg-slate-50'
+          ? 'border-brand-200 bg-[linear-gradient(135deg,rgba(222,239,255,0.96),rgba(255,255,255,0.98))] shadow-[0_20px_34px_rgba(37,99,235,0.10)] ring-1 ring-brand-100'
+          : 'border-[rgba(191,211,238,0.72)] bg-white/72 hover:border-brand-100 hover:bg-white/88'
       }`}
     >
       <span className="flex min-w-0 items-center gap-3">
-        <span className={`size-2.5 shrink-0 rounded-full ${courseKindDots[kind]}`} />
+        <span className={`size-3 shrink-0 rounded-full shadow-sm ${courseKindDots[kind]}`} />
         <span className="min-w-0">
           <span className="block truncate text-base font-semibold text-slate-900">
             {course.name || '未命名课程'}
@@ -41,12 +41,15 @@ export function CourseCard({
       </span>
       <span className="flex items-center gap-3">
         <span className="text-right">
-          <span className="block text-base font-bold text-brand-600">
+          <span className="block text-base font-semibold text-brand-600">
             {formatScore(calculation.projectedScore)}
           </span>
-          <span className="text-xs text-slate-500">分</span>
+          <span className="text-xs text-slate-500">预计总评</span>
         </span>
-        <ChevronRight className="size-4 text-slate-400" aria-hidden="true" />
+        <ChevronRight
+          className={`size-4 text-slate-400 transition ${selected ? 'translate-x-0.5 text-brand-500' : 'group-hover:translate-x-0.5'}`}
+          aria-hidden="true"
+        />
       </span>
     </button>
   )

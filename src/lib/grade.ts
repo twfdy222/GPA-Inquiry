@@ -75,7 +75,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
       status: 'needs-target',
       itemId: pendingItem.id,
       itemName: pendingItem.name,
-      message: '请填写目标总评后再进行反推。',
+      message: '请先填写目标总评，再进行反推。',
     }
   }
 
@@ -84,7 +84,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
       status: 'zero-weight',
       itemId: pendingItem.id,
       itemName: pendingItem.name,
-      message: '待反推项目占比为 0，无法反推。',
+      message: '待反推项目权重为 0，无法反推。',
     }
   }
 
@@ -101,7 +101,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
       itemId: pendingItem.id,
       itemName: pendingItem.name,
       requiredScore,
-      message: '目标不可达。',
+      message: '目标总评不可达。',
     }
   }
 
@@ -111,7 +111,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
       itemId: pendingItem.id,
       itemName: pendingItem.name,
       requiredScore,
-      message: '即使该项 0 分也能达到目标。',
+      message: '即使该项为 0 分，也已经能够达到目标。',
     }
   }
 
@@ -141,11 +141,11 @@ export function calculateCourse(course: Course, rules: GpaRule[]): CourseCalcula
   const warnings: string[] = []
 
   if (weightStatus === 'under') {
-    warnings.push('还有部分成绩项未填写，当前总评不代表最终成绩。')
+    warnings.push('还有部分成绩项目未补齐，当前总评不代表最终成绩。')
   }
 
   if (weightStatus === 'over') {
-    warnings.push('占比超过 100%，请检查是否重复填写或输入错误。')
+    warnings.push('权重超过 100%，请检查是否重复录入或填写错误。')
   }
 
   const pendingItems = course.items.filter((item) => item.isPending)

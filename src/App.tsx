@@ -24,7 +24,6 @@ import {
   DEFAULT_SEMESTER_ID,
   createCourse,
   createDefaultData,
-  createGradeItem,
   createId,
   createSemester,
   nowIso,
@@ -80,7 +79,7 @@ function App() {
         setSelectedCourseId(nextData.courses[0]?.id)
       })
       .catch((error) => {
-        setImportError(error instanceof Error ? error.message : '加载本地数据失败。')
+        setImportError(error instanceof Error ? error.message : '加载本地成绩数据失败。')
         const fallbackData = createDefaultData()
         setData(fallbackData)
       })
@@ -191,7 +190,7 @@ function App() {
       return
     }
 
-    if (!window.confirm(`确定归档“${currentSemester.name}”吗？课程会保留在全部视图中。`)) {
+    if (!window.confirm(`确定归档“${currentSemester.name}”吗？课程会保留在“全部课程”视图中。`)) {
       return
     }
 
@@ -285,7 +284,7 @@ function App() {
   }
 
   const clearData = () => {
-    if (!window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复为空或默认。')) {
+    if (!window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复到默认状态。')) {
       return
     }
 
@@ -370,8 +369,8 @@ function App() {
 
   if (!data) {
     return (
-      <main className="grid min-h-screen place-items-center bg-slate-100 px-4 text-ink">
-        <div className="rounded-lg border border-slate-200 bg-white px-5 py-4 text-sm font-semibold text-slate-600 shadow-soft">
+      <main className="app-shell grid min-h-screen place-items-center px-4 text-ink">
+        <div className="glass-panel rounded-[30px] px-6 py-5 text-sm font-semibold text-slate-600">
           正在加载本地成绩数据...
         </div>
       </main>
@@ -379,55 +378,86 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 text-ink">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1540px] flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-lg bg-brand-600 text-white shadow-sm">
-              <GraduationCap className="size-7" aria-hidden="true" />
+    <main className="app-shell min-h-screen text-ink">
+      <header className="sticky top-0 z-30 border-b border-white/60 bg-[rgba(241,244,251,0.82)] backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1560px] flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
+            <div className="flex items-start gap-4">
+              <div className="hero-badge">
+                <GraduationCap className="size-7" aria-hidden="true" />
+              </div>
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 shadow-[0_8px_30px_rgba(148,163,184,0.10)]">
+                  GPA Inquiry v{APP_VERSION}
+                </div>
+                <div>
+                  <h1 className="font-display text-[clamp(2rem,3vw,3.2rem)] leading-none text-slate-950">
+                    成绩工作台
+                  </h1>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-[15px]">
+                    本地录入、按学期整理、即时测算 GPA 与目标反推。
+                  </p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-slate-950 sm:text-2xl">
-                GPA Inquiry 成绩工作台
-              </h1>
-              <p className="mt-1 text-sm text-slate-500">v{APP_VERSION}</p>
-            </div>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <Button
-              variant={saveStatus === 'saved' ? 'soft' : saveStatus === 'error' ? 'danger' : 'ghost'}
-              size="sm"
-              icon={Save}
-              onClick={saveNow}
-            >
-              {saveStatus === 'saved' ? '已保存' : saveStatus === 'error' ? '保存失败' : '保存数据'}
-            </Button>
-            <Button variant="ghost" size="sm" icon={Download} onClick={() => exportAppData(data)}>
-              导出 JSON
-            </Button>
-            <Button variant="ghost" size="sm" icon={FileSpreadsheet} onClick={() => exportCsv(data, visibleCourses)}>
-              导出 CSV
-            </Button>
-            <Button variant="ghost" size="sm" icon={FileSpreadsheet} onClick={() => void exportXlsx(data, visibleCourses)}>
-              导出 XLSX
-            </Button>
-            <Button variant="ghost" size="sm" icon={Import} onClick={() => importInputRef.current?.click()}>
-              导入 JSON
-            </Button>
-            <Button variant="ghost" size="sm" icon={Upload} onClick={() => tableInputRef.current?.click()}>
-              导入表格
-            </Button>
-            <Button variant="ghost" size="sm" icon={Settings} onClick={openRules}>
-              设置
-            </Button>
-            <input ref={importInputRef} type="file" accept="application/json" onChange={handleJsonImport} className="hidden" />
-            <input ref={tableInputRef} type="file" accept=".csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" onChange={handleTableImport} className="hidden" />
+            <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[520px] xl:max-w-[640px]">
+              <div className="glass-panel glass-panel--blue rounded-[26px] p-3">
+                <div className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                  数据与备份
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant={saveStatus === 'saved' ? 'soft' : saveStatus === 'error' ? 'danger' : 'secondary'}
+                    size="sm"
+                    icon={Save}
+                    onClick={saveNow}
+                  >
+                    {saveStatus === 'saved' ? '已保存' : saveStatus === 'error' ? '保存失败' : '保存数据'}
+                  </Button>
+                  <Button variant="secondary" size="sm" icon={Download} onClick={() => exportAppData(data)}>
+                    导出 JSON
+                  </Button>
+                  <Button variant="secondary" size="sm" icon={Import} onClick={() => importInputRef.current?.click()}>
+                    导入 JSON
+                  </Button>
+                </div>
+              </div>
+
+              <div className="glass-panel glass-panel--mint rounded-[26px] p-3">
+                <div className="px-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                  表格与设置
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="ghost" size="sm" icon={FileSpreadsheet} onClick={() => exportCsv(data, visibleCourses)}>
+                    导出 CSV
+                  </Button>
+                  <Button variant="ghost" size="sm" icon={FileSpreadsheet} onClick={() => void exportXlsx(data, visibleCourses)}>
+                    导出 XLSX
+                  </Button>
+                  <Button variant="ghost" size="sm" icon={Upload} onClick={() => tableInputRef.current?.click()}>
+                    导入表格
+                  </Button>
+                  <Button variant="ghost" size="sm" icon={Settings} onClick={openRules}>
+                    GPA 规则
+                  </Button>
+                </div>
+              </div>
+
+              <input ref={importInputRef} type="file" accept="application/json" onChange={handleJsonImport} className="hidden" />
+              <input
+                ref={tableInputRef}
+                type="file"
+                accept=".csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
+                onChange={handleTableImport}
+                className="hidden"
+              />
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-[1540px] gap-5 px-4 py-5 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-[1560px] gap-5 px-4 py-5 sm:px-6 lg:px-8 xl:gap-6">
         <SummaryCards summary={summary} />
 
         <SemesterBar
@@ -442,28 +472,35 @@ function App() {
         />
 
         {importError && <Notice tone="danger">{importError}</Notice>}
+
         {importPreview && (
           <Notice tone={importPreview.errors.length > 0 ? 'danger' : 'success'}>
-            表格预览：识别到 {importPreview.courses.length} 门课程
-            {importPreview.errors.length > 0
-              ? `，发现 ${importPreview.errors.length} 个错误：${importPreview.errors.slice(0, 3).join('；')}`
-              : '，确认后会追加到当前数据中。'}
-            <span className="ml-3 inline-flex gap-2">
-              <button className="font-semibold text-brand-700 underline" type="button" onClick={confirmTableImport}>
-                确认导入
-              </button>
-              <button className="font-semibold text-slate-600 underline" type="button" onClick={() => setImportPreview(undefined)}>
-                取消
-              </button>
-            </span>
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div className="leading-6">
+                <span className="font-semibold">表格预览：</span>
+                识别到 {importPreview.courses.length} 门课程，共 {importPreview.rowCount} 行。
+                {importPreview.errors.length > 0
+                  ? ` 发现 ${importPreview.errors.length} 个问题：${importPreview.errors.slice(0, 3).join('；')}`
+                  : ' 确认后会追加到当前数据中。'}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button size="sm" variant="soft" onClick={confirmTableImport}>
+                  确认导入
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => setImportPreview(undefined)}>
+                  取消
+                </Button>
+              </div>
+            </div>
           </Notice>
         )}
 
-        <div className="grid gap-5 xl:grid-cols-[minmax(260px,340px)_minmax(0,1fr)_minmax(260px,300px)]">
-          <section className="rounded-lg border border-slate-200 bg-white shadow-soft">
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
+        <div className="grid gap-5 xl:grid-cols-[minmax(280px,342px)_minmax(0,1fr)_minmax(286px,322px)] xl:items-start xl:gap-6">
+          <section className="dashboard-panel dashboard-panel--course-list overflow-hidden">
+            <div className="panel-header border-b border-[var(--section-course-border)]">
               <div>
-                <h2 className="text-base font-semibold text-slate-950">课程列表</h2>
+                <div className="panel-kicker">课程列表</div>
+                <h2 className="mt-1 text-lg font-semibold text-slate-950">课程录入区</h2>
                 <p className="mt-1 text-sm text-slate-500">
                   {viewMode === 'current' ? currentSemester?.name : '全部课程'} · 共 {visibleCourses.length} 门
                 </p>
@@ -473,7 +510,7 @@ function App() {
               </Button>
             </div>
 
-            <div className="grid gap-3 p-3">
+            <div className="grid gap-3 p-3 sm:p-4">
               {visibleCourses.length === 0 ? (
                 <EmptyState onAddCourse={addCourse} />
               ) : (
@@ -489,17 +526,15 @@ function App() {
               )}
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-4 py-3 text-sm text-slate-600">
-              <span>
-                计划 {plannedCredits.toFixed(1)} 学分
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--section-course-border)] bg-white/42 px-4 py-4 text-sm text-slate-600">
+              <span>计划 {plannedCredits.toFixed(1)} 学分</span>
               <Button variant="ghost" size="sm" icon={RotateCcw} onClick={clearData}>
                 清空数据
               </Button>
             </div>
           </section>
 
-          <div className="grid gap-5">
+          <div className="grid gap-5 xl:gap-6">
             <CourseEditor course={selectedCourse} gpaRules={data.gpaRules} onChange={updateCourse} onAddCourse={addCourse} />
             <AnalyticsPanel
               semesterSummaries={semesterSummaries}
@@ -508,7 +543,7 @@ function App() {
             />
           </div>
 
-          <div className="xl:sticky xl:top-24 xl:self-start">
+          <div className="grid gap-5 xl:sticky xl:top-28 xl:self-start">
             <ResultPanel
               course={selectedCourse}
               calculation={selectedCalculation}

@@ -98,7 +98,7 @@ export function exportCsv(data: AppData, courses = data.courses): void {
 
   downloadBlob(
     new Blob([`\ufeff${csvRows.join('\r\n')}`], { type: 'text/csv;charset=utf-8' }),
-    `gpa-inquiry-v2-courses-${new Date().toISOString().slice(0, 10)}.csv`,
+    `gpa-inquiry-v2.1-courses-${new Date().toISOString().slice(0, 10)}.csv`,
   )
 }
 
@@ -121,7 +121,7 @@ export async function exportXlsx(data: AppData, courses = data.courses): Promise
     new Blob([buffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     }),
-    `gpa-inquiry-v2-courses-${new Date().toISOString().slice(0, 10)}.xlsx`,
+    `gpa-inquiry-v2.1-courses-${new Date().toISOString().slice(0, 10)}.xlsx`,
   )
 }
 

@@ -21,7 +21,7 @@ export function GradeItemEditor({
   onDelete,
 }: GradeItemEditorProps) {
   return (
-    <div className="grid gap-3 rounded-md border border-slate-200 bg-slate-50 p-3">
+    <div className="grid gap-3 rounded-[22px] border border-slate-200 bg-slate-50/80 p-4">
       <div className="grid gap-3 sm:grid-cols-3">
         <TextInput
           label="项目名称"

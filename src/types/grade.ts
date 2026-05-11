@@ -1,4 +1,4 @@
-export type AppVersion = '1.0' | '1.1' | '2.0'
+export type AppVersion = '1.0' | '1.1' | '2.0' | '2.1'
 export type SchemaVersion = '2.0'
 export type CourseKind = 'required' | 'major' | 'elective'
 

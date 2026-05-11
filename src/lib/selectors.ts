@@ -80,11 +80,11 @@ export function getRiskCourses(data: AppData, courses: Course[]): RiskCourse[] {
       }
 
       if (calculation.reverse.status === 'ambiguous') {
-        reasons.push('待反推项超过一个')
+        reasons.push('待反推项目超过一个')
       }
 
       if (calculation.reverse.status === 'needs-target') {
-        reasons.push('待反推项缺少目标总评')
+        reasons.push('待反推项目缺少目标总评')
       }
 
       if (course.targetScore !== undefined && calculation.projectedScore !== undefined) {
