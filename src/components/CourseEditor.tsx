@@ -1,9 +1,9 @@
 import { Plus, Trash2 } from 'lucide-react'
-import type { Course, CourseKind, GpaRule, GradeItem } from '../types/grade'
 import { courseKindLabels, courseKindOptions, getCourseKind } from '../lib/courseKind'
 import { createGradeItem } from '../lib/defaults'
-import { calculateCourse } from '../lib/grade'
 import { formatNumber, formatScore } from '../lib/format'
+import { calculateCourse } from '../lib/grade'
+import type { Course, CourseKind, GpaRule, GradeItem } from '../types/grade'
 import {
   Button,
   Notice,
@@ -266,7 +266,7 @@ export function CourseEditor({
 
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 text-sm">
             <span className="font-semibold text-slate-700">
-              权重合计：
+              权重合计：{' '}
               <span
                 className={
                   calculation.weightStatus === 'complete'

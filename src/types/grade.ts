@@ -1,4 +1,5 @@
-export type AppVersion = '1.0' | '1.1'
+export type AppVersion = '1.0' | '1.1' | '2.0'
+export type SchemaVersion = '2.0'
 export type CourseKind = 'required' | 'major' | 'elective'
 
 export type GradeItem = {
@@ -9,13 +10,28 @@ export type GradeItem = {
   isPending?: boolean
 }
 
+export type Semester = {
+  id: string
+  name: string
+  year?: string
+  term?: string
+  archivedAt?: string
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
 export type Course = {
   id: string
+  semesterId: string
   name: string
   kind?: CourseKind
   credits: number
   targetScore?: number
   items: GradeItem[]
+  archivedAt?: string
+  sortOrder: number
+  updatedAt: string
 }
 
 export type GpaRule = {
@@ -25,11 +41,30 @@ export type GpaRule = {
   point: number
 }
 
+export type MigrationRecord = {
+  from: AppVersion | 'empty'
+  to: SchemaVersion
+  migratedAt: string
+  source: 'indexeddb' | 'localStorage' | 'import' | 'empty'
+}
+
 export type AppData = {
   version: AppVersion
+  schemaVersion: SchemaVersion
+  semesters: Semester[]
+  currentSemesterId: string
   courses: Course[]
   gpaRules: GpaRule[]
+  migration?: MigrationRecord
 }
+
+export type LegacyAppData = {
+  version: '1.0' | '1.1'
+  courses: Array<Omit<Course, 'semesterId' | 'sortOrder' | 'updatedAt'> & Partial<Course>>
+  gpaRules: GpaRule[]
+}
+
+export type AppViewMode = 'current' | 'all'
 
 export type WeightStatus = 'complete' | 'under' | 'over'
 
@@ -77,4 +112,14 @@ export type GpaRuleValidation = {
   overlaps: string[]
   gaps: string[]
   warnings: string[]
+}
+
+export type SemesterSummary = SummaryStats & {
+  semesterId: string
+  semesterName: string
+}
+
+export type RiskCourse = {
+  course: Course
+  reasons: string[]
 }

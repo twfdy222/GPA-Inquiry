@@ -1,6 +1,6 @@
 import { BarChart3, BookOpenText, Layers3, Percent } from 'lucide-react'
-import type { SummaryStats } from '../types/grade'
 import { formatGpa, formatScore } from '../lib/format'
+import type { SummaryStats } from '../types/grade'
 
 type SummaryCardsProps = {
   summary: SummaryStats
@@ -33,7 +33,7 @@ export function SummaryCards({ summary }: SummaryCardsProps) {
     {
       label: '总学分',
       value: formatCompactNumber(summary.plannedCredits),
-      note: '已修 / 计划学分总数',
+      note: '已录入课程学分总数',
       icon: BookOpenText,
       tone: 'text-violet-600 bg-violet-50',
     },

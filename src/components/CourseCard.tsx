@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react'
-import type { Course, CourseCalculation } from '../types/grade'
 import { courseKindDots, courseKindLabels, getCourseKind } from '../lib/courseKind'
 import { formatNumber, formatScore } from '../lib/format'
+import type { Course, CourseCalculation } from '../types/grade'
 
 type CourseCardProps = {
   course: Course

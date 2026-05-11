@@ -1,8 +1,8 @@
 import { ChevronDown, Plus, RotateCcw, Trash2 } from 'lucide-react'
-import type { GpaRule } from '../types/grade'
 import { createId, defaultGpaRules } from '../lib/defaults'
-import { validateGpaRules } from '../lib/grade'
 import { formatGpa } from '../lib/format'
+import { validateGpaRules } from '../lib/grade'
+import type { GpaRule } from '../types/grade'
 import { Button, Notice, NumberInput } from './ui'
 
 type GpaRulesPanelProps = {
@@ -40,8 +40,7 @@ export function GpaRulesPanel({
               GPA 计算规则
             </span>
             <span className="mt-1 block text-sm text-slate-500">
-              当前采用：
-              <span className="font-semibold text-brand-700">4.33 制</span>
+              当前采用：<span className="font-semibold text-brand-700">4.33 制</span>
               {' / '}可自定义绩点规则
             </span>
           </span>
@@ -56,7 +55,7 @@ export function GpaRulesPanel({
         <div className="grid gap-4 border-t border-slate-100 px-5 py-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="max-w-3xl text-sm text-slate-500">
-              规则按四舍五入后的最终成绩匹配，判断方式为 min ≤ 分数 &lt; max，最高档可包含 100 分。
+              规则按四舍五入后的最终成绩匹配，判断方式为 min &lt;= 分数 &lt; max，最高档可包含 100 分。
               绩点始终保留两位小数显示，例如 {formatGpa(4)}。
             </p>
             <div className="flex flex-wrap gap-2">

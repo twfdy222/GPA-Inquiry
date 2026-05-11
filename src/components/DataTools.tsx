@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react'
-import type { AppData } from '../types/grade'
 import { exportAppData, parseImportedAppData } from '../lib/storage'
+import type { AppData } from '../types/grade'
 import { Button, Notice } from './ui'
 
 type DataToolsProps = {
@@ -42,7 +42,7 @@ export function DataTools({
         <div>
           <h2 className="text-base font-semibold text-slate-900">数据工具</h2>
           <p className="mt-1 text-sm text-slate-500">
-            当前数据只保存在这个浏览器里，可以导出 JSON 备份。
+            当前数据只保存在这个浏览器里，可导出 JSON 备份。
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -59,7 +59,7 @@ export function DataTools({
           <Button
             variant="danger"
             onClick={() => {
-              if (window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复为空/默认。')) {
+              if (window.confirm('确定清空全部数据吗？课程和 GPA 规则都会恢复为空或默认。')) {
                 onClear()
               }
             }}

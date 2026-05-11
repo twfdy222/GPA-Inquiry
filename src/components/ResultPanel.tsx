@@ -1,6 +1,6 @@
 import { Copy, Info, Trash2 } from 'lucide-react'
-import type { Course, CourseCalculation } from '../types/grade'
 import { formatScore } from '../lib/format'
+import type { Course, CourseCalculation } from '../types/grade'
 import { Button, Notice } from './ui'
 
 type ResultPanelProps = {
@@ -49,7 +49,7 @@ function getReverseNote(calculation: CourseCalculation | undefined) {
     )} 分`
   }
 
-  return calculation.reverse.message ?? '请检查目标总评和待反推项'
+  return calculation.reverse.message ?? '请检查目标总评和待反推项目'
 }
 
 export function ResultPanel({

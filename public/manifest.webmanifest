@@ -1,0 +1,21 @@
+{
+  "name": "GPA Inquiry 成绩工作台",
+  "short_name": "GPA Inquiry",
+  "description": "本地优先的 GPA 和成绩模拟工作台。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#1f72bd",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%231f72bd'/%3E%3Cpath d='M30 72 96 36l66 36-66 36L30 72Z' fill='white'/%3E%3Cpath d='M60 96v30c9 12 63 12 72 0V96' fill='none' stroke='white' stroke-width='12' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231f72bd'/%3E%3Cpath d='M80 192 256 96l176 96-176 96L80 192Z' fill='white'/%3E%3Cpath d='M160 256v80c24 32 168 32 192 0v-80' fill='none' stroke='white' stroke-width='32' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

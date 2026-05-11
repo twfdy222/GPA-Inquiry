@@ -64,7 +64,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
   if (pendingItems.length > 1) {
     return {
       status: 'ambiguous',
-      message: '规则不明确：每门课最多只能有一个待反推项。',
+      message: '规则不明确：每门课最多只能有一个待反推项目。',
     }
   }
 
@@ -84,7 +84,7 @@ export function calculateReverseScore(course: Course): ReverseResult {
       status: 'zero-weight',
       itemId: pendingItem.id,
       itemName: pendingItem.name,
-      message: '待反推项占比为 0，无法反推。',
+      message: '待反推项目占比为 0，无法反推。',
     }
   }
 
