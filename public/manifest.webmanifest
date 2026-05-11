@@ -1,10 +1,10 @@
 {
   "name": "GPA Inquiry 成绩工作台",
   "short_name": "GPA Inquiry",
-  "description": "本地优先的 GPA 和成绩模拟工作台。",
+  "description": "本地优先的 GPA 与成绩管理工作台。",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f1f5f9",
+  "background_color": "#eef4ff",
   "theme_color": "#1f72bd",
   "icons": [
     {

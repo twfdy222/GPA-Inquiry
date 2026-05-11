@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gpa-inquiry-v2-shell'
+const CACHE_NAME = 'gpa-inquiry-v2.1-shell'
 const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest']
 
 self.addEventListener('install', (event) => {
